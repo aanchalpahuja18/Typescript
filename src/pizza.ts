@@ -79,4 +79,4 @@ function completeOrder(orderId:number) {
     return order;
 }
 
-console.log(completeOrder(3))
+console.log(completeOrder(2))
