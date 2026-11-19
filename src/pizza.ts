@@ -3,6 +3,12 @@ type Pizza = {
     price: number
 }
 
+type Order = {
+    orderId: number,
+    pizza: Pizza,
+    status: "ordered" | "completed"
+}
+
 const menu = [
     {
         name: "Margherita", 
@@ -23,7 +29,7 @@ const menu = [
 ]
 
 let cashInRegister = 100;
-let orderQueue = [];
+let orderQueue: Order[] = [];
 let nextOrderId = 1;
 
 function addNewPizza(newPizza: Pizza) {
@@ -35,7 +41,7 @@ addNewPizza({name: "Cheese", price: 10})
 
 function placeOrder(pizzaName: string) {
     let pizzaObj = menu.find((el) => el.name === pizzaName)
-    let newOrder;
+    let newOrder: Order;
     if(pizzaObj){
         console.log("Pizza found", pizzaObj);
         cashInRegister += pizzaObj.price;
@@ -59,9 +65,13 @@ console.log(orderedItem2)
 
 function completeOrder(orderId:number) {
     let order = orderQueue.find(el => el.orderId === orderId);
+    if(!order){
+        console.log(`Couldn't find your #${orderId} in the order queue`);
+        return
+    }
     console.log(order);
     order.status = "completed";
     return order;
 }
 
-console.log(completeOrder(2))
+console.log(completeOrder(3))
