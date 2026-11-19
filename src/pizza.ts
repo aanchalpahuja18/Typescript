@@ -1,4 +1,5 @@
 type Pizza = {
+    id: number,
     name: string,
     price: number
 }
@@ -9,20 +10,24 @@ type Order = {
     status: "ordered" | "completed"
 }
 
-const menu = [
-    {
+const menu: Pizza[] = [
+    {   
+        id: 1,
         name: "Margherita", 
         price: 8
     },
     {
+        id: 2,
         name: "Pepporoni", 
         price: 10
     },
     {
+        id: 3,
         name: "Hawaiian", 
         price: 10
     },
     {
+        id: 4,
         name: "Veggie", 
         price: 9
     }
@@ -37,7 +42,7 @@ function addNewPizza(newPizza: Pizza) {
     // console.log(menu);
 }
 
-addNewPizza({name: "Cheese", price: 10})
+addNewPizza({id: 5,name: "Cheese", price: 10})
 
 function placeOrder(pizzaName: string) {
     let pizzaObj = menu.find((el) => el.name === pizzaName)
