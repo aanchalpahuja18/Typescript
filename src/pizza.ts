@@ -1,5 +1,5 @@
 type Pizza = {
-    id: number,
+    id?: number,
     name: string,
     price: number
 }
@@ -10,24 +10,26 @@ type Order = {
     status: "ordered" | "completed"
 }
 
+let menuItemId = 1;
+
 const menu: Pizza[] = [
     {   
-        id: 1,
+        id: menuItemId++,
         name: "Margherita", 
         price: 8
     },
     {
-        id: 2,
+        id: menuItemId++,
         name: "Pepporoni", 
         price: 10
     },
     {
-        id: 3,
+        id: menuItemId++,
         name: "Hawaiian", 
         price: 10
     },
     {
-        id: 4,
+        id: menuItemId++,
         name: "Veggie", 
         price: 9
     }
@@ -37,14 +39,18 @@ let cashInRegister = 100;
 let orderQueue: Order[] = [];
 let nextOrderId = 1;
 
-function addNewPizza(newPizza: Pizza) {
+function addNewPizza(newPizza: Pizza): void {
+    newPizza.id = menuItemId++;
     menu.push(newPizza);
-    // console.log(menu);
+    console.log(menu);
 }
 
-addNewPizza({id: 5,name: "Cheese", price: 10})
+addNewPizza({name: "Cheese", price: 10})
+addNewPizza({name: "Cheese Burst", price: 10})
+addNewPizza({name: "Indie Tandori Paneer", price: 10})
+addNewPizza({name: "Golden corn fresh pan", price: 8})
 
-function placeOrder(pizzaName: string) {
+function placeOrder(pizzaName: string): Order | undefined {
     let pizzaObj = menu.find((el) => el.name === pizzaName)
     let newOrder: Order;
     if(pizzaObj){
@@ -68,7 +74,7 @@ console.log(orderedItem2)
 
 
 
-function completeOrder(orderId:number) {
+function completeOrder(orderId:number): Order | undefined {
     let order = orderQueue.find(el => el.orderId === orderId);
     if(!order){
         console.log(`Couldn't find your #${orderId} in the order queue`);
@@ -80,3 +86,35 @@ function completeOrder(orderId:number) {
 }
 
 console.log(completeOrder(2))
+
+
+
+function getPizzaDetail(id: string | number): Pizza | undefined {
+    let pizza;
+    if(typeof id === "number") {
+        pizza = menu.find((el) => el.id === id);
+        if(!pizza) {
+            console.log(`Sorry we don't have the pizza with id: ${id}`);
+            return;
+        }
+        return pizza;
+    }
+    else if(typeof id === "string"){
+        pizza = menu.find((el) => el.name.toLowerCase() === id.toLowerCase());
+        if(!pizza) {
+            console.log(`Sorry we don't have the ${id} pizza`);
+            return;
+        }
+        return pizza;
+    }
+    else{
+        throw new TypeError(`Parameter id must be either number or string type.`)
+    }
+}
+
+console.log("Getting the pizza ready...")
+console.log(getPizzaDetail(2));
+console.log(getPizzaDetail("Veggie"));
+console.log(getPizzaDetail("Paneer"));
+
+console.log(getPizzaDetail(10));
