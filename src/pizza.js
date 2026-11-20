@@ -1,3 +1,5 @@
+import {getPizzaDetail} from "../src/pizza";
+
 const menu = [
     {
         name: "Margherita", 
@@ -59,3 +61,5 @@ function completeOrder(orderId) {
 }
 
 console.log(completeOrder(2))
+
+console.log(getPizzaDetail(true));
