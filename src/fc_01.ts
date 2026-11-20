@@ -84,3 +84,47 @@ let humans: Human[] = [human1, human2]
 // let humans = [human1, human2]
 
 console.log("Humans are: ", humans)
+
+
+type UserRole = "guest" | "member" | "admin";
+
+type User = {
+    id:number,
+    name: string,
+    role: UserRole,
+}
+
+type UpdatedUser = Partial<User>
+
+const users: User[] = [
+    {id: 1,name: "aanchal", role: "admin"},
+    {id: 2,name: "parv", role: "member"},
+    {id: 3, name: "guest_user", role: "guest"},
+    {id: 4, name: "riya", role: "admin"},
+    {id: 5, name: "praveen", role: "member"}
+]
+
+function updateUser(id: number, updates: UpdatedUser){
+    let user = users.find((el) => el.id === id);    
+    if(!user){
+        console.log("User not found");
+        return;
+    }
+    Object.assign(user, updates)
+}
+
+updateUser(1, {name: "ap"});
+updateUser(2, {role: "admin"})
+
+console.log("Users: ", users);
+
+function fetchUserDetails(username: string): User {
+    const user = users.find((el) => el.name === username);
+    if(!user){
+        throw new Error(`User with ${username} not found`)
+    }
+    return user;
+}
+
+console.log("Fetching user details....")
+console.log(fetchUserDetails("riya"));  
