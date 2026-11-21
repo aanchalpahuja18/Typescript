@@ -21,7 +21,7 @@ type Address = {
     country: string
 }
 
-//here we are telling inside the object what all properties it will have and what would be the type of the particular property rather than providing a specific value to it.
+//here we are mentioning inside the object what all properties it will have and what would be the type of the particular property rather than providing a specific value to it.
 type Person = {
     name: string,
     age: number,
@@ -96,12 +96,14 @@ type User = {
 
 type UpdatedUser = Partial<User>
 
+let userID = 1;
+
 const users: User[] = [
-    {id: 1,name: "aanchal", role: "admin"},
-    {id: 2,name: "parv", role: "member"},
-    {id: 3, name: "guest_user", role: "guest"},
-    {id: 4, name: "riya", role: "admin"},
-    {id: 5, name: "praveen", role: "member"}
+    {id: userID++,name: "aanchal", role: "admin"},
+    {id: userID++,name: "parv", role: "member"},
+    // {id: 3, name: "guest_user", role: "guest"},
+    // {id: 4, name: "riya", role: "admin"},
+    // {id: 5, name: "praveen", role: "member"}
 ]
 
 function updateUser(id: number, updates: UpdatedUser){
@@ -127,4 +129,13 @@ function fetchUserDetails(username: string): User {
 }
 
 console.log("Fetching user details....")
-console.log(fetchUserDetails("riya"));  
+console.log(fetchUserDetails("ap"));  
+
+function addNewUser(user: Omit<User, "id">) : User {
+    const newUser: User = {id: userID++, ...user};
+    users.push(newUser);
+    return newUser
+}
+
+addNewUser({name: "aanchal", role: "member"})
+console.log("New user added...", users);
