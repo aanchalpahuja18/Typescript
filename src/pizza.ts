@@ -1,5 +1,5 @@
 type Pizza = {
-    id?: number,
+    id: number,
     name: string,
     price: number
 }
@@ -39,13 +39,17 @@ let cashInRegister = 100;
 let orderQueue: Order[] = [];
 let nextOrderId = 1;
 
-function addNewPizza(newPizza: Pizza): void {
-    newPizza.id = menuItemId++;
-    menu.push(newPizza);
+function addNewPizza(newPizza: Omit<Pizza, "id">): Pizza {
+    const pizza: Pizza = {
+        id: menuItemId++,
+        ...newPizza
+    }
+    menu.push(pizza);
     console.log(menu);
+    return pizza;
 }
 
-addNewPizza({name: "Cheese", price: 10})
+console.log("New pizza added: ", addNewPizza({name: "Cheese", price: 10}));
 addNewPizza({name: "Cheese Burst", price: 10})
 addNewPizza({name: "Indie Tandori Paneer", price: 10})
 addNewPizza({name: "Golden corn fresh pan", price: 8})
